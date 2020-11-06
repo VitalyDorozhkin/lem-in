@@ -18,7 +18,7 @@ int	cmp_room(void *a, void *b)
 		return (1);
 	if (!b)
 		return (-1);
-	return (strcmp(((t_room *)a)->name, ((t_room *)b)->name));
+	return (ft_strcmp(((t_room *)a)->name, ((t_room *)b)->name));
 }
 
 int	cmp_path(void *a, void *b)
