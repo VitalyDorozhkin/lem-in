@@ -88,6 +88,7 @@ t_list2			*get_all_pathes(t_lemin *lemin, t_room *start, t_room *end);
 int				cmp_room(void *a, void *b);
 int				cmp_path(void *a, void *b);
 int				if_min(int *a, int b);
+int				if_min_or_eq(int *a, int b);
 void			free_lemin(t_lemin *lemin);
 void			free_path(void *data);
 void			free_room(void *data);

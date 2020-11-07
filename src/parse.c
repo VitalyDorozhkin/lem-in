@@ -12,7 +12,7 @@
 
 #include <lem_in.h>
 
-int	ft_str_to_uint(t_lemin *lemin, const char *str)
+int		ft_str_to_uint(t_lemin *lemin, const char *str)
 {
 	unsigned long long	res;
 
@@ -29,21 +29,32 @@ int	ft_str_to_uint(t_lemin *lemin, const char *str)
 	return (res);
 }
 
-int	parse_room(t_lemin *lemin, char const *l, t_room **room)
+int		i(t_lemin *lemin, const char *str)
+{
+	if (!str)
+		return (0);
+	if (*str == '-')
+		return (!ft_strcmp(str + 1, "2147483648") ||
+			ft_str_to_uint(lemin, str + 1));
+	else
+		return (ft_str_to_uint(lemin, str));
+}
+
+int		parse_room(t_lemin *lemin, char const *l, t_room **room)
 {
 	int		ret;
 	char	**res;
 	char	**res_ptr;
 
 	ret = 0;
-	if (!l || *l == '#' || *l == 'L' || !(res = ft_strsplit(l, ' ')))
+	if (!l || ft_strchr("L#", *l) || !(res = ft_strsplit(l, ' ')))
 		return (0);
 	res_ptr = res;
 	while (*res_ptr)
 		res_ptr++;
-	if (res_ptr - res == 3 && ft_str_to_uint(lemin, *(res + 1)) >= 0 &&
-		ft_str_to_uint(lemin, *(res + 2)) >= 0 && (*room =
-				(t_room *)ft_memalloc(sizeof(t_room))))
+	if (res_ptr - res == 3 && !ft_strchr(*res, '-') &&
+		i(lemin, *(res + 1)) >= 0 && i(lemin, *(res + 2)) >= 0 &&
+		(*room = (t_room *)ft_memalloc(sizeof(t_room))))
 	{
 		(*room)->name = *res;
 		ft_memdel((void**)(res + (ret = 1)));
@@ -58,7 +69,7 @@ int	parse_room(t_lemin *lemin, char const *l, t_room **room)
 	return (ret);
 }
 
-int	parse_link(t_lemin *lemin, const char *l, t_link **link)
+int		parse_link(t_lemin *lemin, const char *l, t_link **link)
 {
 	int		ret;
 	char	**res_ptr;
@@ -85,27 +96,27 @@ int	parse_link(t_lemin *lemin, const char *l, t_link **link)
 	return (ret);
 }
 
-int	parse_line(t_lemin *lemin, const char *line, t_room **room, t_link **link)
+int		parse_line(t_lemin *lemin, const char *l, t_room **room, t_link **link)
 {
 	int	lemins;
 
-	if (!line)
+	if (!l)
 		ft_exit(lemin);
-	if (*line == '#')
+	if (*l == '#')
 	{
-		if (ft_strcmp(line + 1, "#start") == 0)
+		if (ft_strcmp(l + 1, "#start") == 0)
 			return (-2);
-		if (ft_strcmp(line + 1, "#end") == 0)
+		if (ft_strcmp(l + 1, "#end") == 0)
 			return (-3);
 	}
 	else
 	{
-		lemins = ft_str_to_uint(lemin, line);
+		lemins = ft_str_to_uint(lemin, l);
 		if (lemins > 0)
 			return (lemins);
-		if (parse_room(lemin, line, room))
+		if (parse_room(lemin, l, room))
 			return (-1);
-		if (parse_link(lemin, line, link))
+		if (parse_link(lemin, l, link))
 			return (-4);
 		ft_exit(lemin);
 	}

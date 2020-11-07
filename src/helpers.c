@@ -40,6 +40,16 @@ int	if_min(int *a, int b)
 	return (0);
 }
 
+int	if_min_or_eq(int *a, int b)
+{
+	if (a && b <= *a)
+	{
+		*a = b;
+		return (1);
+	}
+	return (0);
+}
+
 int	get_traffic(void *data)
 {
 	return ((t_path *)data)->len + ((t_path *)data)->lemins;

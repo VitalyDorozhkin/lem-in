@@ -39,7 +39,7 @@ int		main_iteration(t_lemin *lemin, int *min)
 	ft_memdel((void**)&path);
 	clear_rooms(lemin);
 	pathes = get_all_pathes(lemin, lemin->start, lemin->end);
-	if (if_min(min, launch_ants(pathes, lemin->lemins_count)))
+	if (if_min_or_eq(min, launch_ants(pathes, lemin->lemins_count)))
 	{
 		list_apply(lemin->best_pathes, free_path);
 		lst_free(&lemin->best_pathes);
@@ -61,7 +61,7 @@ int		main(int argc, char **argv)
 
 	founded = 0;
 	lemin = get_lemin();
-	min = 2000000000;
+	min = 2147483647;
 	main_validation(&lemin, 0, 0, 0b00011111u);
 	while (!founded)
 		founded = main_iteration(&lemin, &min);

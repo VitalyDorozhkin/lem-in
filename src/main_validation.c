@@ -58,8 +58,8 @@ void	main_validation_room(t_lemin *lemin, unsigned char *mode,
 							t_room *cur_room)
 {
 	mode_check_room(lemin, *mode);
-	cur_room->min_distance_from_all = 2000000000;
-	cur_room->min_distance_from_visited = 2000000000;
+	cur_room->min_distance_from_all = 2147483640;
+	cur_room->min_distance_from_visited = 2147483640;
 	if (mode_task_start(mode))
 	{
 		cur_room->min_distance_from_all = 0;

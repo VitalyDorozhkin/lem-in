@@ -86,8 +86,8 @@ void		clear_room(void *data)
 	room = (t_room*)data;
 	if (!data)
 		return ;
-	room->min_distance_from_all = 2000000000;
-	room->min_distance_from_visited = 2000000000;
+	room->min_distance_from_all = 2147483640;
+	room->min_distance_from_visited = 2147483640;
 	room->prev_from_all = 0;
 	room->prev_from_visited = 0;
 	room->next = 0;
